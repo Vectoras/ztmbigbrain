@@ -14,7 +14,7 @@
     </nav>
 
     <!-- Logo -->
-    <section class="logo" data-tilt data-tilt-max="35">
+    <section class="logo" data-tilt data-tilt-max="25">
       <a href="">
         <img src="./images/logo.svg" alt="Smart Brain" />
       </a>
@@ -22,22 +22,28 @@
 
     <!-- User Info -->
     <section class="user-info">
-      <h1>Ionut, you are ranked <span id="rank">#3</span></h1>
+      <h1>Ionut, you are currently ranked #3</h1>
     </section>
 
     <!-- Main app -->
     <main class="app">
+      <!-- Message -->
+      <h1>This magic Brain will detect faces in your pictures. Give it a try.</h1>
       <!-- Image Selection -->
       <div class="form">
-        <form>
-          <input type="text" name="" id="" />
+        <form id="app-form">
+          <input type="text" name="image-source" id="image-source" />
           <button type="submit">Detect</button>
         </form>
       </div>
 
       <!-- Display selected Image -->
-      <div class="selected+-image"></div>
+      <div class="selected-image">
+        <img src="" alt="Paste a valid link for an image in the above field" id="current-image" />
+      </div>
     </main>
+
+    <canvas class="background"></canvas>
 
     <script type="module" src="./js/script.js"></script>
   </body>
