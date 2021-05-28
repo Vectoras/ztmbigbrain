@@ -14,14 +14,16 @@
     </nav>
 
     <!-- Logo -->
-    <section class="logo">
+    <section class="logo" data-tilt data-tilt-max="35">
       <a href="">
-        <img src="" alt="Smart Brain" />
+        <img src="./images/logo.svg" alt="Smart Brain" />
       </a>
     </section>
 
     <!-- User Info -->
-    <section class="user-info">Ionut, you are ranked #3</section>
+    <section class="user-info">
+      <h1>Ionut, you are ranked <span id="rank">#3</span></h1>
+    </section>
 
     <!-- Main app -->
     <main class="app">
@@ -37,6 +39,6 @@
       <div class="selected+-image"></div>
     </main>
 
-    <script src="./js/script.js"></script>
+    <script type="module" src="./js/script.js"></script>
   </body>
 </html>
