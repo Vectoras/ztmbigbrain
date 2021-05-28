@@ -1,5 +1,5 @@
-{ 
-  "less.compile": {
-    "out" : "style.css"
-  }
+{
+	"less.compile": {
+		"out": "./"
+	}
 }
