@@ -107,7 +107,13 @@ button {
 .app .form form button:hover {
   transform: scale(105%);
 }
-.app .selected-image {
+.app .selected-image-container {
   margin: 0.5rem 0 0 0;
   max-width: 30rem;
+  position: relative;
+}
+.face-box {
+  border: 2px #149df2 solid;
+  display: inline-block;
+  position: absolute;
 }
