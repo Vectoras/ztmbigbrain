@@ -9,9 +9,7 @@
   </head>
   <body>
     <!-- Navigation -->
-    <nav class="navigation">
-      <a href="">Sign Out</a>
-    </nav>
+    <nav class="navigation" id="navigation"></nav>
 
     <!-- Logo -->
     <section class="logo" data-tilt data-tilt-max="25">
@@ -20,26 +18,7 @@
       </a>
     </section>
 
-    <!-- User Info -->
-    <section class="user-info">
-      <h1>Ionut, you are currently ranked #3</h1>
-    </section>
-
-    <!-- Main app -->
-    <main class="app">
-      <!-- Message -->
-      <h1>This magic Brain will detect faces in your pictures. Give it a try.</h1>
-      <!-- Image Selection -->
-      <div class="form">
-        <form id="app-form">
-          <input type="text" name="image-source" id="image-source" />
-          <button type="submit">Detect</button>
-        </form>
-      </div>
-
-      <!-- Display selected Image -->
-      <div class="selected-image-container" id="selected-image-container"></div>
-    </main>
+    <main id="page-main-content"></main>
 
     <canvas class="background"></canvas>
 
