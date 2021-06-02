@@ -1,6 +1,7 @@
 // modules
 const express = require("express");
 const bcrypt = require("bcrypt-nodejs");
+const cors = require("cors");
 
 // global variables
 let database = {
@@ -35,24 +36,27 @@ let database = {
 // setting the server
 const app = express();
 
-// root, for testing purposes
-app.get("/", (req, res) => {
-  res.json(database.users);
-});
+// middleware
+app.use(express.json());
+app.use(cors());
 
 app.listen(3000, () => {
   console.log("app is running on port 3000");
 });
 
-// middleware
-app.use(express.json());
+// root, for testing purposes
+app.get("/", (req, res) => {
+  res.json(database.users);
+});
 
 // signin
 app.post("/signin", (req, res) => {
+  console.log("req.body.email: ", req.body.email);
+  console.log("req.body.password: ", req.body.password);
   if (req.body.email === database.users[0].email && req.body.password === database.users[0].password) {
     res.json("Success loging in");
   } else {
-    res.status(400).json("Error logging in");
+    res.status(400).json(database.users[0]);
   }
 });
 

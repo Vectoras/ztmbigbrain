@@ -280,4 +280,35 @@ function pageSignIn() {
   container.append(text, form);
   // Append to page
   mainPageContent.appendChild(container);
+
+  // --- signIn functionality
+  // signIn Function
+  async function signIn() {
+    let response = await fetch("http://localhost:3000/signin", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: inputs[0].value,
+        password: inputs[1].value,
+      }),
+    });
+    let data = await response.json();
+
+    if ((await data) === "Success loging in") {
+      pageApp();
+    }
+  }
+  // form event listener
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    signIn();
+  });
 }
+
+// testing the server
+async function testServer() {
+  let response = await fetch("http://localhost:3000");
+  let data = await response.json();
+  console.log(data);
+}
+// testServer();
