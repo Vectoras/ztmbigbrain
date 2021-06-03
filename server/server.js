@@ -51,12 +51,15 @@ app.get("/", (req, res) => {
 
 // signin
 app.post("/signin", (req, res) => {
-  console.log("req.body.email: ", req.body.email);
-  console.log("req.body.password: ", req.body.password);
   if (req.body.email === database.users[0].email && req.body.password === database.users[0].password) {
-    res.json("Success loging in");
+    res.json({
+      success: true,
+      id: database.users[0].id,
+      name: database.users[0].name,
+      entries: database.users[0].entries,
+    });
   } else {
-    res.status(400).json(database.users[0]);
+    res.status(400).json({ success: false });
   }
 });
 
@@ -70,7 +73,15 @@ app.post("/register", (req, res) => {
     entries: 0,
     joined: new Date(),
   });
-  res.json(database.users[database.users.length - 1]);
+
+  let user = database.users[database.users.length - 1];
+
+  res.json({
+    success: true,
+    id: user.id,
+    name: user.name,
+    entries: user.entries,
+  });
 });
 
 // profile
@@ -91,15 +102,20 @@ app.get("/profile/:id", (req, res) => {
 // image
 app.put("/image", (req, res) => {
   const { id } = req.body;
+  console.log("id", id);
   let found = false;
   database.users.forEach((user) => {
     if (user.id === id) {
       found = true;
       user.entries++;
-      res.json(user);
+      res.json({
+        success: true,
+        name: user.name,
+        entries: user.entries,
+      });
     }
   });
   if (!found) {
-    res.status(400).json("no such user");
+    res.status(401).json("no such user");
   }
 });

@@ -62,7 +62,7 @@ window.onload = function () {
 // -- pages -----------------------------
 
 // app page
-function pageApp() {
+function pageApp(user) {
   // clearing the DOM
   mainPageContent.textContent = "";
   mainPageNavigation.textContent = "";
@@ -81,7 +81,7 @@ function pageApp() {
   const userInfo = document.createElement("section");
   userInfo.classList.add("user-info");
   const userInfoText = document.createElement("h1");
-  userInfoText.textContent = `Ionut you are currently ranked #${3}`;
+  userInfoText.textContent = `${user.name} your currently entry count is #${user.entries}`;
   userInfo.appendChild(userInfoText);
   // main app
   const mainApp = document.createElement("section");
@@ -142,6 +142,16 @@ function pageApp() {
         let faceBoxesArray = response.outputs[0].data.regions.map((currentRegion) => {
           return currentRegion.region_info.bounding_box;
         });
+        // update the entry count for the user
+        fetch("http://localhost:3000/image", {
+          method: "put",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: user.id }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            userInfoText.textContent = `${data.name} your currently entry count is #${data.entries}`;
+          });
         // draw the boxes
         faceBoxesArray.forEach((faceBox) => {
           // create element and add css build class
@@ -208,7 +218,7 @@ function pageRegister() {
   // inputs
   let inputs = [];
   inputs[0] = document.createElement("input");
-  setAttributes(inputs[0], { type: "text", name: "register-email", id: "register-name" });
+  setAttributes(inputs[0], { type: "text", name: "register-name", id: "register-name" });
   inputs[1] = document.createElement("input");
   setAttributes(inputs[1], { type: "email", name: "register-email", id: "register-email" });
   inputs[2] = document.createElement("input");
@@ -222,6 +232,30 @@ function pageRegister() {
   container.append(text, form);
   // Append to page
   mainPageContent.appendChild(container);
+
+  // --- register functionality
+  // signIn Function
+  async function register() {
+    let response = await fetch("http://localhost:3000/register", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: inputs[0].value,
+        email: inputs[1].value,
+        password: inputs[2].value,
+      }),
+    });
+    let data = await response.json();
+
+    if (data.success) {
+      pageApp(data);
+    }
+  }
+  // form event listener
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    register();
+  });
 }
 
 // sign in page
@@ -294,8 +328,8 @@ function pageSignIn() {
     });
     let data = await response.json();
 
-    if ((await data) === "Success loging in") {
-      pageApp();
+    if (data.success) {
+      pageApp(data);
     }
   }
   // form event listener
