@@ -25,7 +25,9 @@
   "homepage": "https://github.com/Vectoras/ztmbigbrain#readme",
   "dependencies": {
     "clarifai": "^2.9.1",
+    "knex": "^0.95.6",
     "particlesjs": "^2.2.3",
+    "pg": "^8.6.0",
     "vanilla-tilt": "^1.7.0"
   }
 }

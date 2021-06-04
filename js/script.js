@@ -121,7 +121,7 @@ function pageApp(user) {
 
   // -- app functionality -----------------
 
-  // source change
+  // image source change
   imageSourceEl.addEventListener("change", (e) => {
     // reset the container
     imageContainerEl.textContent = "";
@@ -150,7 +150,7 @@ function pageApp(user) {
         })
           .then((response) => response.json())
           .then((data) => {
-            userInfoText.textContent = `${data.name} your currently entry count is #${data.entries}`;
+            userInfoText.textContent = `${data.name} your current entry count is #${data.entries}`;
           });
         // draw the boxes
         faceBoxesArray.forEach((faceBox) => {
@@ -247,7 +247,8 @@ function pageRegister() {
     });
     let data = await response.json();
 
-    if (data.success) {
+    console.log(data);
+    if (data.id) {
       pageApp(data);
     }
   }
@@ -328,7 +329,7 @@ function pageSignIn() {
     });
     let data = await response.json();
 
-    if (data.success) {
+    if (data.id) {
       pageApp(data);
     }
   }

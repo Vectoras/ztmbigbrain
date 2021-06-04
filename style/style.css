@@ -150,6 +150,15 @@ button {
   border: solid 1px #222222;
   margin: 0 auto 2rem;
 }
+.sign-in-form-container #sign-in-form input:focus,
+.register-form-container #sign-in-form input:focus,
+.sign-in-form-container #register-form input:focus,
+.register-form-container #register-form input:focus {
+  border-radius: 0;
+  background: #222222;
+  color: #f5f5f5;
+  outline: #f5f5f5 1px solid;
+}
 .sign-in-form-container #sign-in-form button,
 .register-form-container #sign-in-form button,
 .sign-in-form-container #register-form button,
