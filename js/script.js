@@ -106,10 +106,6 @@ function pageApp(user) {
   mainPageContent.append(userInfo, mainApp);
 
   // -- functionality
-  // Clarifai
-  const app = new Clarifai.App({
-    apiKey: "833cf82f5bb24fb99dcd15f6c1c1448d",
-  });
 
   // global variables
   let imageEl;
@@ -136,24 +132,21 @@ function pageApp(user) {
   // form submission (request to detect)
   formEl.addEventListener("submit", (e) => {
     e.preventDefault();
-    app.models
-      .predict("a403429f2ddf4b49b307e318f00e528b", imageEl.src)
+
+    fetch("http://localhost:3000/image", {
+      method: "put",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: user.id, imageSrc: imageEl.src }),
+    })
+      .then((response) => response.json())
       .then((response) => {
-        let faceBoxesArray = response.outputs[0].data.regions.map((currentRegion) => {
-          return currentRegion.region_info.bounding_box;
-        });
+        return response;
+      })
+      .then((data) => {
         // update the entry count for the user
-        fetch("http://localhost:3000/image", {
-          method: "put",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: user.id }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            userInfoText.textContent = `${data.name} your current entry count is #${data.entries}`;
-          });
+        userInfoText.textContent = `${data.name} your current entry count is #${data.entries}`;
         // draw the boxes
-        faceBoxesArray.forEach((faceBox) => {
+        data.faceBoxesArray.forEach((faceBox) => {
           // create element and add css build class
           const faceBoxEl = document.createElement("div");
           faceBoxEl.classList.add("face-box");
@@ -167,7 +160,7 @@ function pageApp(user) {
         });
       })
       .catch((err) => {
-        console.log("An error happened: ", err);
+        console.log("Error when sending the image for processing: ", err);
       });
   });
 }
@@ -247,7 +240,6 @@ function pageRegister() {
     });
     let data = await response.json();
 
-    console.log(data);
     if (data.id) {
       pageApp(data);
     }
@@ -339,11 +331,3 @@ function pageSignIn() {
     signIn();
   });
 }
-
-// testing the server
-async function testServer() {
-  let response = await fetch("http://localhost:3000");
-  let data = await response.json();
-  console.log(data);
-}
-// testServer();
